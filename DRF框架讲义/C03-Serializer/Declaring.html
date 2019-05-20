@@ -61,7 +61,7 @@
         data-chapter-title="定义Serializer"
         data-filepath="C03-Serializer/Declaring.md"
         data-basepath=".."
-        data-revision="Sat May 18 2019 16:23:27 GMT+0800 (CST)"
+        data-revision="Sun May 19 2019 20:42:09 GMT+0800 (CST)"
         data-innerlanguage="">
     
 
@@ -859,7 +859,210 @@ serializer.validated_data
 </tbody>
 </table>
 <blockquote>
-<p>&#x6CE8;&#xFF1A;&#x5B9A;&#x4E49;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;&#x7684;&#x5B57;&#x6BB5;&#x662F;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;read_only&#x548C;write_only&#xFF0C;&#x5219;&#x8FD9;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x6267;&#x884C;&#x9ED8;&#x8BA4;&#x90FD;&#x4E3A;False&#xFF0C;&#x8868;&#x660E;&#x8BE5;&#x5B57;&#x6BB5;&#x5373;&#x5728;&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x4F7F;&#x7528;&#xFF0C;&#x4E5F;&#x5728;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x4F7F;&#x7528;&#x3002;</p>
+<p>&#x6CE8;&#xFF1A;&#x5B9A;&#x4E49;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;&#x7684;&#x5B57;&#x6BB5;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;read_only&#x548C;write_only&#xFF0C;&#x5219;&#x8FD9;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x9ED8;&#x8BA4;&#x503C;&#x90FD;&#x4E3A;False&#xFF0C;&#x8868;&#x660E;&#x8BE5;&#x5B57;&#x6BB5;&#x5373;&#x5728;&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x4F7F;&#x7528;&#xFF0C;&#x4E5F;&#x5728;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x4F7F;&#x7528;&#x3002;</p>
+</blockquote>
+<p><code>read_only&#x793A;&#x4F8B;</code>&#xFF1A;</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> rest_framework <span class="hljs-keyword">import</span> serializers
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span><span class="hljs-params">(object)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x7528;&#x6237;&#x7C7B;&quot;&quot;&quot;</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, age)</span>:</span>
+        self.name = name
+        self.age = age
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSerializer</span><span class="hljs-params">(serializers.Serializer)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;&quot;&quot;&quot;</span>
+    name = serializers.CharField()
+    age = serializers.IntegerField(read_only=<span class="hljs-keyword">True</span>)
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    <span class="hljs-comment"># &#x51C6;&#x5907;&#x6570;&#x636E;</span>
+    data = {<span class="hljs-string">&apos;name&apos;</span>: <span class="hljs-string">&apos;laowang&apos;</span>, <span class="hljs-string">&apos;age&apos;</span>: <span class="hljs-number">18</span>}
+
+    <span class="hljs-comment"># &#x6570;&#x636E;&#x6821;&#x9A8C;</span>
+    serializer = UserSerializer(data=data)
+    res = serializer.is_valid()
+
+    print(<span class="hljs-string">&apos;&#x6821;&#x9A8C;&#x7ED3;&#x679C;&#xFF1A;%s&apos;</span> % res)
+
+    <span class="hljs-comment"># &#x5982;&#x679C;&#x6821;&#x9A8C;&#x5931;&#x8D25;&#xFF0C;&#x83B7;&#x53D6;&#x6821;&#x9A8C;&#x5931;&#x8D25;&#x7684;&#x9519;&#x8BEF;&#x539F;&#x56E0;</span>
+    print(serializer.errors)
+
+    <span class="hljs-comment"># &#x5982;&#x679C;&#x6821;&#x9A8C;&#x6210;&#x529F;&#xFF0C;&#x83B7;&#x53D6;&#x6821;&#x9A8C;&#x4E4B;&#x540E;&#x7684;&#x6570;&#x636E;</span>
+    print(serializer.validated_data)
+</code></pre>
+<p><code>&#x793A;&#x4F8B;&#x7ED3;&#x679C;</code>&#xFF1A;
+<img src="../images/read_only&#x53C2;&#x6570;.png" alt="read_only&#x53C2;&#x6570;"></p>
+<p><code>write_only&#x793A;&#x4F8B;</code>&#xFF1A;</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> rest_framework <span class="hljs-keyword">import</span> serializers
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span><span class="hljs-params">(object)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x7528;&#x6237;&#x7C7B;&quot;&quot;&quot;</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, age)</span>:</span>
+        self.name = name
+        self.age = age
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSerializer</span><span class="hljs-params">(serializers.Serializer)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;&quot;&quot;&quot;</span>
+    name = serializers.CharField()
+    age = serializers.IntegerField(write_only=<span class="hljs-keyword">True</span>)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    <span class="hljs-comment"># &#x521B;&#x5EFA;user&#x5BF9;&#x8C61;</span>
+    user = User(<span class="hljs-string">&apos;smart&apos;</span>, <span class="hljs-number">18</span>)
+
+    <span class="hljs-comment"># &#x5C06;user&#x5BF9;&#x8C61;&#x5E8F;&#x5217;&#x5316;&#x4E3A;&#x5B57;&#x5178;{&apos;name&apos;: &apos;smart&apos;, &apos;age&apos;: 18}</span>
+    serializer = UserSerializer(user)
+
+    <span class="hljs-comment"># serializer.data&#x83B7;&#x53D6;&#x5E8F;&#x5217;&#x5316;&#x4E4B;&#x540E;&#x7684;&#x5B57;&#x5178;&#x6570;&#x636E;</span>
+    print(serializer.data)
+</code></pre>
+<p><code>&#x793A;&#x4F8B;&#x7ED3;&#x679C;</code>&#xFF1A;
+<img src="../images/write_only&#x53C2;&#x6570;.png" alt="wirte_only&#x53C2;&#x6570;"></p>
+<p><code>required&#x793A;&#x4F8B;</code>&#xFF1A;</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> rest_framework <span class="hljs-keyword">import</span> serializers
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span><span class="hljs-params">(object)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x7528;&#x6237;&#x7C7B;&quot;&quot;&quot;</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, age)</span>:</span>
+        self.name = name
+        self.age = age
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSerializer</span><span class="hljs-params">(serializers.Serializer)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;&quot;&quot;&quot;</span>
+    name = serializers.CharField()
+    age = serializers.IntegerField()
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    <span class="hljs-comment"># &#x51C6;&#x5907;&#x6570;&#x636E;</span>
+    data = {<span class="hljs-string">&apos;name&apos;</span>: <span class="hljs-string">&apos;laowang&apos;</span>}
+
+    <span class="hljs-comment"># &#x6570;&#x636E;&#x6821;&#x9A8C;</span>
+    serializer = UserSerializer(data=data)
+    res = serializer.is_valid()
+
+    print(<span class="hljs-string">&apos;&#x6821;&#x9A8C;&#x7ED3;&#x679C;&#xFF1A;%s&apos;</span> % res)
+
+    <span class="hljs-comment"># &#x5982;&#x679C;&#x6821;&#x9A8C;&#x5931;&#x8D25;&#xFF0C;&#x83B7;&#x53D6;&#x6821;&#x9A8C;&#x5931;&#x8D25;&#x7684;&#x9519;&#x8BEF;&#x539F;&#x56E0;</span>
+    print(serializer.errors)
+
+    <span class="hljs-comment"># &#x5982;&#x679C;&#x6821;&#x9A8C;&#x6210;&#x529F;&#xFF0C;&#x83B7;&#x53D6;&#x6821;&#x9A8C;&#x4E4B;&#x540E;&#x7684;&#x6570;&#x636E;</span>
+    print(serializer.validated_data)
+</code></pre>
+<p><code>&#x793A;&#x4F8B;&#x7ED3;&#x679C;</code>&#xFF1A;
+<img src="../images/required&#x53C2;&#x6570;1.png" alt="required&#x53C2;&#x6570;"></p>
+<p><code>&#x5C06;&#x4E0A;&#x9762;&#x793A;&#x4F8B;&#x4E2D;age&#x5B57;&#x6BB5;&#x7684;required&#x8BBE;&#x7F6E;&#x4E3A;False</code>&#xFF1A;</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> rest_framework <span class="hljs-keyword">import</span> serializers
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span><span class="hljs-params">(object)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x7528;&#x6237;&#x7C7B;&quot;&quot;&quot;</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, age)</span>:</span>
+        self.name = name
+        self.age = age
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSerializer</span><span class="hljs-params">(serializers.Serializer)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;&quot;&quot;&quot;</span>
+    name = serializers.CharField()
+    age = serializers.IntegerField(required=<span class="hljs-keyword">False</span>)
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    <span class="hljs-comment"># &#x51C6;&#x5907;&#x6570;&#x636E;</span>
+    data = {<span class="hljs-string">&apos;name&apos;</span>: <span class="hljs-string">&apos;laowang&apos;</span>}
+
+    <span class="hljs-comment"># &#x6570;&#x636E;&#x6821;&#x9A8C;</span>
+    serializer = UserSerializer(data=data)
+    res = serializer.is_valid()
+
+    print(<span class="hljs-string">&apos;&#x6821;&#x9A8C;&#x7ED3;&#x679C;&#xFF1A;%s&apos;</span> % res)
+
+    <span class="hljs-comment"># &#x5982;&#x679C;&#x6821;&#x9A8C;&#x5931;&#x8D25;&#xFF0C;&#x83B7;&#x53D6;&#x6821;&#x9A8C;&#x5931;&#x8D25;&#x7684;&#x9519;&#x8BEF;&#x539F;&#x56E0;</span>
+    print(serializer.errors)
+
+    <span class="hljs-comment"># &#x5982;&#x679C;&#x6821;&#x9A8C;&#x6210;&#x529F;&#xFF0C;&#x83B7;&#x53D6;&#x6821;&#x9A8C;&#x4E4B;&#x540E;&#x7684;&#x6570;&#x636E;</span>
+    print(serializer.validated_data)
+</code></pre>
+<p><code>&#x793A;&#x4F8B;&#x7ED3;&#x679C;</code>&#xFF1A;
+<img src="../images/required&#x53C2;&#x6570;2.png" alt="required&#x53C2;&#x6570;"></p>
+<p><code>default&#x793A;&#x4F8B;</code>&#xFF1A;<br>
+<code>&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;</code></p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> rest_framework <span class="hljs-keyword">import</span> serializers
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span><span class="hljs-params">(object)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x7528;&#x6237;&#x7C7B;&quot;&quot;&quot;</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, age)</span>:</span>
+        self.name = name
+        self.age = age
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSerializer</span><span class="hljs-params">(serializers.Serializer)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;&quot;&quot;&quot;</span>
+    name = serializers.CharField()
+    age = serializers.IntegerField()
+    addr = serializers.CharField(default=<span class="hljs-string">&apos;&#x9ED8;&#x8BA4;&#x5730;&#x5740;&apos;</span>)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    <span class="hljs-comment"># &#x521B;&#x5EFA;user&#x5BF9;&#x8C61;</span>
+    user = User(<span class="hljs-string">&apos;smart&apos;</span>, <span class="hljs-number">18</span>)
+
+    <span class="hljs-comment"># &#x5C06;user&#x5BF9;&#x8C61;&#x5E8F;&#x5217;&#x5316;&#x4E3A;&#x5B57;&#x5178;{&apos;name&apos;: &apos;smart&apos;, &apos;age&apos;: 18}</span>
+    serializer = UserSerializer(user)
+
+    <span class="hljs-comment"># serializer.data&#x83B7;&#x53D6;&#x5E8F;&#x5217;&#x5316;&#x4E4B;&#x540E;&#x7684;&#x5B57;&#x5178;&#x6570;&#x636E;</span>
+    print(serializer.data)
+</code></pre>
+<p><code>&#x793A;&#x4F8B;&#x7ED3;&#x679C;</code>&#xFF1A;
+<img src="../images/default&#x53C2;&#x6570;1.png" alt="default&#x53C2;&#x6570;"></p>
+<blockquote>
+<p>&#x6CE8;&#xFF1A;&#x5982;&#x679C;user&#x5BF9;&#x8C61;&#x6709;addr&#x5C5E;&#x6027;&#xFF0C;&#x5219;&#x5E8F;&#x5217;&#x5316;&#x4E4B;&#x540E;&#x7684;&#x5B57;&#x5178;&#x4E2D;addr&#x7684;&#x503C;&#x4E0D;&#x518D;&#x4F7F;&#x7528;default&#x8BBE;&#x7F6E;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x3002;</p>
+</blockquote>
+<p><code>&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;</code></p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> rest_framework <span class="hljs-keyword">import</span> serializers
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span><span class="hljs-params">(object)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x7528;&#x6237;&#x7C7B;&quot;&quot;&quot;</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, age)</span>:</span>
+        self.name = name
+        self.age = age
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSerializer</span><span class="hljs-params">(serializers.Serializer)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;&quot;&quot;&quot;</span>
+    name = serializers.CharField()
+    age = serializers.IntegerField(required=<span class="hljs-keyword">False</span>, default=<span class="hljs-number">20</span>)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    <span class="hljs-comment"># &#x51C6;&#x5907;&#x6570;&#x636E;</span>
+    data = {<span class="hljs-string">&apos;name&apos;</span>: <span class="hljs-string">&apos;laowang&apos;</span>}
+
+    <span class="hljs-comment"># &#x6570;&#x636E;&#x6821;&#x9A8C;</span>
+    serializer = UserSerializer(data=data)
+    res = serializer.is_valid()
+
+    print(<span class="hljs-string">&apos;&#x6821;&#x9A8C;&#x7ED3;&#x679C;&#xFF1A;%s&apos;</span> % res)
+
+    <span class="hljs-comment"># &#x5982;&#x679C;&#x6821;&#x9A8C;&#x5931;&#x8D25;&#xFF0C;&#x83B7;&#x53D6;&#x6821;&#x9A8C;&#x5931;&#x8D25;&#x7684;&#x9519;&#x8BEF;&#x539F;&#x56E0;</span>
+    print(serializer.errors)
+
+    <span class="hljs-comment"># &#x5982;&#x679C;&#x6821;&#x9A8C;&#x6210;&#x529F;&#xFF0C;&#x83B7;&#x53D6;&#x6821;&#x9A8C;&#x4E4B;&#x540E;&#x7684;&#x6570;&#x636E;</span>
+    print(serializer.validated_data)
+</code></pre>
+<p><code>&#x793A;&#x4F8B;&#x7ED3;&#x679C;</code>&#xFF1A;
+<img src="../images/default&#x53C2;&#x6570;2.png" alt="default&#x53C2;&#x6570;"></p>
+<blockquote>
+<p>&#x6CE8;&#xFF1A;&#x5982;&#x679C;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x4F20;&#x9012;&#x7684;data&#x4E2D;&#x5305;&#x542B;age&#xFF0C;&#x5219;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x4E4B;&#x540E;&#x7684;&#x5B57;&#x5178;&#x4E2D;age&#x7684;&#x503C;&#x4E0D;&#x518D;&#x4F7F;&#x7528;default&#x8BBE;&#x7F6E;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x3002;</p>
 </blockquote>
 <p><strong>&#x5E38;&#x7528;&#x53C2;&#x6570;</strong>&#xFF1A;</p>
 <table>

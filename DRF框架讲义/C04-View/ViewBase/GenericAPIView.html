@@ -61,7 +61,7 @@
         data-chapter-title="GenericAPIView"
         data-filepath="C04-View/ViewBase/GenericAPIView.md"
         data-basepath="../.."
-        data-revision="Sat May 18 2019 16:23:27 GMT+0800 (CST)"
+        data-revision="Sun May 19 2019 20:42:09 GMT+0800 (CST)"
         data-innerlanguage="">
     
 
@@ -674,7 +674,7 @@
 <li><p><strong>get_serializer_class(self)</strong>   </p>
 <p>&#x8FD4;&#x56DE;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;&#xFF0C;&#x9ED8;&#x8BA4;&#x8FD4;&#x56DE;<code>serializer_class</code>&#xFF0C;&#x53EF;&#x4EE5;&#x91CD;&#x5199;&#x3002;</p>
 </li>
-<li><p><strong>get_serializer(self, *args, </strong>kwargs)**</p>
+<li><p><strong>get_serializer(self, <em>args, **</em></strong>kwargs)</p>
 <p>&#x8FD4;&#x56DE;&#x521B;&#x5EFA;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x5728;&#x89C6;&#x56FE;&#x4E2D;&#x60F3;&#x8981;&#x83B7;&#x53D6;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x5BF9;&#x8C61;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x6B64;&#x65B9;&#x6CD5;&#x3002;</p>
 </li>
 </ul>
@@ -718,7 +718,7 @@
     &#x83B7;&#x53D6;&#x6240;&#x6709;&#x56FE;&#x4E66;&#x3001;&#x589E;&#x52A0;&#x56FE;&#x4E66;
     &quot;&quot;&quot;</span>
     <span class="hljs-comment"># &#x6307;&#x5B9A;&#x89C6;&#x56FE;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;</span>
-    serializer = BookInfoSerializer
+    serializer_class = BookInfoSerializer
     <span class="hljs-comment"># &#x6307;&#x5B9A;&#x89C6;&#x56FE;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x67E5;&#x8BE2;&#x96C6;</span>
     queryset = BookInfo.objects.all()
 
@@ -752,7 +752,7 @@
     &#x83B7;&#x53D6;&#x3001;&#x4FEE;&#x6539;&#x3001;&#x5220;&#x9664;&#x6307;&#x5B9A;&#x56FE;&#x4E66;
     &quot;&quot;&quot;</span>
     <span class="hljs-comment"># &#x6307;&#x5B9A;&#x89C6;&#x56FE;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x7C7B;</span>
-    serializer = BookInfoSerializer
+    serializer_class = BookInfoSerializer
     <span class="hljs-comment"># &#x6307;&#x5B9A;&#x89C6;&#x56FE;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x67E5;&#x8BE2;&#x96C6;</span>
     queryset = BookInfo.objects.all()
 
